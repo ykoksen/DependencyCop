@@ -1,6 +1,4 @@
 ﻿
-using UsingNamespaceStatementAnalyzer.Account;
-
 namespace UsingNamespaceStatementAnalyzer.Account
 {
     class Id<T>
