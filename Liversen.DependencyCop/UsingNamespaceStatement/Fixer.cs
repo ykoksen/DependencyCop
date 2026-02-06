@@ -145,6 +145,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                 var newChild = HandlePotentialNodeTree(childNode, namespaceWhereTypeWasDeclared, token);
                 if (newChild != childNode)
                 {
+                    // Sometimes we don't change the parent node - so we keep the possible qualified name syntax / original node. Sometimes we need to change so we also change the simple name syntax.
                     originalNode = originalNode.ReplaceNode(childNode, newChild);
                     simpleNameSyntax = simpleNameSyntax?.ReplaceNode(childNode, newChild);
                 }
@@ -152,6 +153,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
 
             if (simpleNameSyntax != null)
             {
+                // Add both the simplename syntax AND the original node in case we don't need to change anything.
                 var violation = new Violation(namespaceWhereTypeWasDeclared, simpleNameSyntax, symbolInfo.Symbol, originalNode);
                 return FixViolation(violation, token);
             }
