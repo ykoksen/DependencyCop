@@ -60,10 +60,6 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
 
         async Task<Document> Fix(CancellationToken cancellationToken)
         {
-            ////var violations = await FindViolations(cancellationToken);
-
-            ////FixViolations(violations, cancellationToken);
-
             await FixViolationsRecursively(cancellationToken);
 
             editor.RemoveNode(usingDirective);
@@ -79,14 +75,14 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                 return;
             }
 
-            GoThroughNodes(rootNode, token);
+            GoThroughClasses(rootNode, token);
         }
 
-        void GoThroughNodes(SyntaxNode node, CancellationToken token)
+        void GoThroughClasses(SyntaxNode node, CancellationToken token)
         {
             foreach (var childNode in node.ChildNodes())
             {
-                GoThroughNodes(childNode, token);
+                GoThroughClasses(childNode, token);
 
                 if (childNode is ClassDeclarationSyntax classDeclaration)
                 {
@@ -102,16 +98,16 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                         continue;
                     }
 
-                    GoThroughClassNodes(childNode, token);
+                    GoThroughSimpleNames(childNode, typeOuterNamespace, token);
                 }
             }
         }
 
-        void GoThroughClassNodes(SyntaxNode node, CancellationToken token)
+        void GoThroughSimpleNames(SyntaxNode node, DottedName namespaceWhereTypeWasDeclared, CancellationToken token)
         {
             foreach (var childNode in node.ChildNodes())
             {
-                GoThroughClassNodes(childNode, token);
+                GoThroughSimpleNames(childNode, namespaceWhereTypeWasDeclared, token);
 
                 if (childNode is SimpleNameSyntax nameSyntax)
                 {
@@ -119,65 +115,9 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                     var symbolContainingNamespace = Helpers.ContainingNamespace(symbol);
                     if (symbolContainingNamespace == usingDirectiveName)
                     {
-                        FixViolation(new Violation(symbolContainingNamespace, nameSyntax), token);
+                        FixViolation(new Violation(namespaceWhereTypeWasDeclared, nameSyntax), token);
                     }
                 }
-            }
-        }
-
-        async Task<IEnumerable<Violation>> FindViolations(CancellationToken cancellationToken)
-        {
-            var rootNode = await document.GetSyntaxRootAsync(cancellationToken);
-            if (rootNode == null)
-            {
-                return Enumerable.Empty<Violation>();
-            }
-
-            var violations = new List<Violation>();
-            var classDeclarations = rootNode.DescendantNodes().OfType<ClassDeclarationSyntax>();
-            foreach (var classDeclaration in classDeclarations)
-            {
-                var declaredSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, cancellationToken);
-                if (declaredSymbol == null)
-                {
-                    continue;
-                }
-
-                var typeOuterNamespace = Helpers.ContainingNamespace(declaredSymbol);
-                if (typeOuterNamespace == null || typeOuterNamespace == usingDirectiveName)
-                {
-                    continue;
-                }
-
-                var typeDeclarations = classDeclaration.DescendantNodes().OfType<SimpleNameSyntax>();
-
-                violations.AddRange(FilterTypeDeclarationWithinSpecifiedNamespace(typeDeclarations, typeOuterNamespace, cancellationToken));
-            }
-
-            return violations;
-        }
-
-        IEnumerable<Violation> FilterTypeDeclarationWithinSpecifiedNamespace(IEnumerable<SimpleNameSyntax> typeDeclarations, DottedName typeOuterNamespace, CancellationToken cancellationToken)
-        {
-            if (typeOuterNamespace != usingDirectiveName)
-            {
-                foreach (var typeDecl in typeDeclarations)
-                {
-                    var symbol = semanticModel.GetSymbolInfo(typeDecl, cancellationToken).Symbol;
-                    var symbolContainingNamespace = Helpers.ContainingNamespace(symbol);
-                    if (symbolContainingNamespace == usingDirectiveName)
-                    {
-                        yield return new Violation(typeOuterNamespace, typeDecl);
-                    }
-                }
-            }
-        }
-
-        void FixViolations(IEnumerable<Violation> violations, CancellationToken cancellationToken)
-        {
-            foreach (var violation in violations.Reverse())
-            {
-                FixViolation(violation, cancellationToken);
             }
         }
 
@@ -189,6 +129,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                 symbol.ContainingNamespace.ToDisplayString() == usingDirectiveName.Value)
             {
                 var fullNameSpace = symbol.ToDisplayString();
+                var lol = ((QualifiedNameSyntax)SyntaxFactory.ParseName(fullNameSpace)).Left;
 
                 var possibleMethodCall = violation.ViolatingNode.Parent;
                 if (possibleMethodCall is MemberAccessExpressionSyntax)
@@ -201,33 +142,26 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                 }
                 else
                 {
-                    FixByQualifyingUsageOfType(fullNameSpace, violation);
+                    FixByQualifyingUsageOfType(lol, violation);
                 }
             }
         }
 
-        void FixByQualifyingUsageOfType(string fullNameSpace, Violation violation)
+        void FixByQualifyingUsageOfType(NameSyntax fullNameSpace, Violation violation)
         {
-            var replacementName = new DottedName(fullNameSpace).SkipCommonPrefix(violation.Namespace);
+            var replacementName = new DottedName(fullNameSpace.ToString()).SkipCommonPrefix(violation.Namespace);
             if (replacementName != null)
             {
-                var qualifiedName = SyntaxFactory.ParseName(replacementName.Value)
-                    .WithLeadingTrivia(violation.ViolatingNode.GetLeadingTrivia())
-                    .WithTrailingTrivia(violation.ViolatingNode.GetTrailingTrivia());
+                var nameSyntax = SyntaxFactory.ParseName(replacementName.Value);
+                var qualifiedNameSyntax = SyntaxFactory.QualifiedName(nameSyntax, violation.ViolatingNode);
 
-                // At least some namespace already present - maybe even too much.
-                if (violation.ViolatingNode.Parent is QualifiedNameSyntax identifierQualifiedNameSyntax)
+                if (violation.ViolatingNode.Parent is QualifiedNameSyntax)
                 {
-                    if (identifierQualifiedNameSyntax.ToFullString() != qualifiedName.ToFullString())
-                    {
-                        editor.ReplaceNode(identifierQualifiedNameSyntax, qualifiedName);
-                    }
-
-                    // Else do nothing - already qualified as it should be.
+                    editor.ReplaceNode(violation.ViolatingNode.Parent, qualifiedNameSyntax);
                 }
                 else
                 {
-                    editor.ReplaceNode(violation.ViolatingNode, qualifiedName);
+                    editor.ReplaceNode(violation.ViolatingNode, qualifiedNameSyntax);
                 }
             }
         }
@@ -244,7 +178,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
 
         sealed class Violation
         {
-            public Violation(DottedName @namespace, TypeSyntax violatingNode)
+            public Violation(DottedName @namespace, SimpleNameSyntax violatingNode)
             {
                 Namespace = @namespace;
                 ViolatingNode = violatingNode;
@@ -252,7 +186,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
 
             public DottedName Namespace { get; }
 
-            public TypeSyntax ViolatingNode { get; }
+            public SimpleNameSyntax ViolatingNode { get; }
         }
     }
 }
