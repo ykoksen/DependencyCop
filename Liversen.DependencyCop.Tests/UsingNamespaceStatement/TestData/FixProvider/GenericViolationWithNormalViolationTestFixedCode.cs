@@ -1,4 +1,6 @@
 ﻿
+using UsingNamespaceStatementAnalyzer.Account;
+
 namespace UsingNamespaceStatementAnalyzer.Account
 {
     class Id<T>
@@ -16,7 +18,7 @@ namespace UsingNamespaceStatementAnalyzer.Transaction
 {
     class Current
     {
-        public Account.Id<Account.Item> AccountId { get; set; }
+        public Account.Id<Account.Id<Account.Id<Account.Id<Account.Item>>>> AccountId { get; set; }
 
         public string Text { get; set; }
     }

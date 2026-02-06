@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable S1144
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,13 +60,69 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
 
         async Task<Document> Fix(CancellationToken cancellationToken)
         {
-            var violations = await FindViolations(cancellationToken);
+            ////var violations = await FindViolations(cancellationToken);
 
-            FixViolations(violations, cancellationToken);
+            ////FixViolations(violations, cancellationToken);
+
+            await FixViolationsRecursively(cancellationToken);
 
             editor.RemoveNode(usingDirective);
 
             return editor.GetChangedDocument();
+        }
+
+        async Task FixViolationsRecursively(CancellationToken token)
+        {
+            var rootNode = await document.GetSyntaxRootAsync(token);
+            if (rootNode == null)
+            {
+                return;
+            }
+
+            GoThroughNodes(rootNode, token);
+        }
+
+        void GoThroughNodes(SyntaxNode node, CancellationToken token)
+        {
+            foreach (var childNode in node.ChildNodes())
+            {
+                GoThroughNodes(childNode, token);
+
+                if (childNode is ClassDeclarationSyntax classDeclaration)
+                {
+                    var declaredSymbol = semanticModel.GetDeclaredSymbol(classDeclaration, token);
+                    if (declaredSymbol == null)
+                    {
+                        continue;
+                    }
+
+                    var typeOuterNamespace = Helpers.ContainingNamespace(declaredSymbol);
+                    if (typeOuterNamespace == null || typeOuterNamespace == usingDirectiveName)
+                    {
+                        continue;
+                    }
+
+                    GoThroughClassNodes(childNode, token);
+                }
+            }
+        }
+
+        void GoThroughClassNodes(SyntaxNode node, CancellationToken token)
+        {
+            foreach (var childNode in node.ChildNodes())
+            {
+                GoThroughClassNodes(childNode, token);
+
+                if (childNode is SimpleNameSyntax nameSyntax)
+                {
+                    var symbol = semanticModel.GetSymbolInfo(nameSyntax, token).Symbol;
+                    var symbolContainingNamespace = Helpers.ContainingNamespace(symbol);
+                    if (symbolContainingNamespace == usingDirectiveName)
+                    {
+                        FixViolation(new Violation(symbolContainingNamespace, nameSyntax), token);
+                    }
+                }
+            }
         }
 
         async Task<IEnumerable<Violation>> FindViolations(CancellationToken cancellationToken)
@@ -118,28 +175,33 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
 
         void FixViolations(IEnumerable<Violation> violations, CancellationToken cancellationToken)
         {
-            foreach (var violation in violations)
+            foreach (var violation in violations.Reverse())
             {
-                var symbolInfo = semanticModel.GetSymbolInfo(violation.ViolatingNode, cancellationToken);
-                var symbol = symbolInfo.Symbol;
-                if (symbol?.ContainingNamespace != null &&
-                    symbol.ContainingNamespace.ToDisplayString() == usingDirectiveName.Value)
-                {
-                    var fullNameSpace = symbol.ToDisplayString();
+                FixViolation(violation, cancellationToken);
+            }
+        }
 
-                    var possibleMethodCall = violation.ViolatingNode.Parent;
-                    if (possibleMethodCall is MemberAccessExpressionSyntax)
+        void FixViolation(Violation violation, CancellationToken cancellationToken)
+        {
+            var symbolInfo = semanticModel.GetSymbolInfo(violation.ViolatingNode, cancellationToken);
+            var symbol = symbolInfo.Symbol;
+            if (symbol?.ContainingNamespace != null &&
+                symbol.ContainingNamespace.ToDisplayString() == usingDirectiveName.Value)
+            {
+                var fullNameSpace = symbol.ToDisplayString();
+
+                var possibleMethodCall = violation.ViolatingNode.Parent;
+                if (possibleMethodCall is MemberAccessExpressionSyntax)
+                {
+                    if (semanticModel.GetSymbolInfo(possibleMethodCall, cancellationToken).Symbol is IMethodSymbol possibleExtensionMethod
+                        && possibleExtensionMethod.IsExtensionMethod)
                     {
-                        if (semanticModel.GetSymbolInfo(possibleMethodCall, cancellationToken).Symbol is IMethodSymbol possibleExtensionMethod
-                            && possibleExtensionMethod.IsExtensionMethod)
-                        {
-                            FixByAddingStaticUsingDirectiveForExtensionMethodCall(symbol);
-                        }
+                        FixByAddingStaticUsingDirectiveForExtensionMethodCall(symbol);
                     }
-                    else
-                    {
-                        FixByQualifyingUsageOfType(fullNameSpace, violation);
-                    }
+                }
+                else
+                {
+                    FixByQualifyingUsageOfType(fullNameSpace, violation);
                 }
             }
         }
