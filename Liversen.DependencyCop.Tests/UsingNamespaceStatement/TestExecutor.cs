@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Testing;
@@ -31,6 +32,8 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
         [InlineData("ExtensionMethodUsedTwice")]
         [InlineData("AlreadyFullyQualified")]
         [InlineData("StaticUsingAlreadyExists")]
+        [InlineData("GenericViolationWithNormalViolationTest")]
+        [InlineData("NameAsGenericTest")]
         async Task GivenCodeUsingDisallowedNamespace_WhenCodeFix_ThenExpectedResult(string testName, string optionalExtraNamespace = null)
         {
             var code = EmbeddedResourceHelpers.GetFixProviderTestData(GetType(), $"{testName}Code");
@@ -57,7 +60,10 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                 },
             };
 
-            await Should.NotThrowAsync(async () => await test.RunAsync());
+            await test.RunAsync(TestContext.Current.CancellationToken);
+
+            // Hack - We want the full stack trace if the test fails, but the test framework only shows the message. Shouldly's Should.NotThrowAsync will show the full stack trace, but it doesn't work with the CSharpCodeFixTest for some reason. So we wrap it in a Should.NotThrowAsync to get the full stack trace if it fails, and if it doesn't fail we just assert true to satisfy the test framework.
+            Assert.True(true);
         }
 
         [Fact]
