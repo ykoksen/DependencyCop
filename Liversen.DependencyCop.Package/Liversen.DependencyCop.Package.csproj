@@ -18,12 +18,13 @@
     <Authors>Lars Iversen, Morten Hartlev Lindhart</Authors>
     <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) (c) Lars Iversen. All rights reserved.</Copyright>
     <Description>Roslyn analyzers that enforce restrictions on dependencies between namespaces.</Description>
+    <PackageId>Liversen.DependencyCop</PackageId>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>Roslyn;Analyzers;CodeAnalysis</PackageTags>
+    <PackageTags>Liversen.DependencyCop;Roslyn;Analyzers;CodeAnalysis</PackageTags>
     <PackageProjectUrl>https://github.com/larsiverpp/DependencyCop</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)-beta.4</PackageVersion>
+    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)-beta.4.1</PackageVersion>
     <RepositoryUrl>https://github.com/larsiverpp/DependencyCop.git </RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
