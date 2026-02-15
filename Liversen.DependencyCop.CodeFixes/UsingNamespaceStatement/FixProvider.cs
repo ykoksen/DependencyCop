@@ -41,7 +41,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
                         CodeAction.Create(
                             title: $"Qualify usages and remove this line ('using {usingDirective.Name};').",
                             createChangedDocument: c => Fixer.Fix(document, usingDirective, c),
-                            equivalenceKey: "QualifyAndRemoveUsing"),
+                            equivalenceKey: "DC.QualifyAndRemoveUsing"),
                         diagnostic);
                 }
             }
