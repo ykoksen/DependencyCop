@@ -3,6 +3,7 @@
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>
+  <Project Path="Liversen.DependencyCop.CodeFixes/Liversen.DependencyCop.CodeFixes.csproj" Id="e5caa807-2983-48c5-b640-a68b3f1089d1" />
   <Project Path="Liversen.DependencyCop.Tests/Liversen.DependencyCop.Tests.csproj" />
   <Project Path="Liversen.DependencyCop/Liversen.DependencyCop.csproj" />
 </Solution>

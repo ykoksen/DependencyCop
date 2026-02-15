@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Liversen.DependencyCop
 {
-    static class Helpers
+    public static class Helpers
     {
         public static DottedName ContainingNamespace(ISymbol typeSymbol) =>
             typeSymbol.ContainingNamespace != null
