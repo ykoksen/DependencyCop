@@ -9,8 +9,3 @@ This package contains a number of Roslyn analyzer rules using the .NET Compiler 
 [Rule DC1003: Code must not contain namespace cycles](https://github.com/larsiverpp/DependencyCop/blob/main/Documentation/DC1003.md)
 
 [Rule DC1004: Rule DC1001 is not configured](https://github.com/larsiverpp/DependencyCop/blob/main/Documentation/DC1004.md)
-
-## Changelog
-
-### 1.0 - 2.0
-- Refactored components.
