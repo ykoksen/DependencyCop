@@ -13,4 +13,4 @@ This package contains a number of Roslyn analyzer rules using the .NET Compiler 
 ## Changelog
 
 ### 1.0 - 2.0
-- Added FixProvider for DC1001.
+- Refactored components.
