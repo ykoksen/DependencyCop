@@ -15,9 +15,87 @@
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Analyzer\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\AlreadyFullyQualifiedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\AlreadyFullyQualifiedFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ArrayTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ArrayTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\AsyncMethodReturnCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\AsyncMethodReturnFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\DoubleTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\DoubleTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodUsedTwiceCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodUsedTwiceFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\GenericTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\GenericTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\GenericViolationWithNormalViolationTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\GenericViolationWithNormalViolationTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ListTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ListTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MemberMethodCallCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MemberMethodCallFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MethodParameterCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MethodParameterFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MethodParameterWithAttributeCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MethodParameterWithAttributeFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MethodReturnCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MethodReturnFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\SimpleTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\SimpleTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\StaticUsingAlreadyExistsCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\StaticUsingAlreadyExistsFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\SubSpaceTestCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\SubSpaceTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsFixedCode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\AlreadyFullyQualifiedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\AlreadyFullyQualifiedFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ArrayTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ArrayTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\AsyncMethodReturnCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\AsyncMethodReturnFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\DoubleTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\DoubleTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodUsedTwiceCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodUsedTwiceFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\GenericTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\GenericTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\GenericViolationWithNormalViolationTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\GenericViolationWithNormalViolationTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ListTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ListTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MemberMethodCallCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MemberMethodCallFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MethodParameterCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MethodParameterFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MethodParameterWithAttributeCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MethodParameterWithAttributeFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MethodReturnCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MethodReturnFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\SimpleTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\SimpleTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\StaticUsingAlreadyExistsCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\StaticUsingAlreadyExistsFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\SubSpaceTestCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\SubSpaceTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsFixedCode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Liversen.DependencyCop.CodeFixes\Liversen.DependencyCop.CodeFixes.csproj" />
     <ProjectReference Include="..\Liversen.DependencyCop\Liversen.DependencyCop.csproj" />
   </ItemGroup>
 </Project>
