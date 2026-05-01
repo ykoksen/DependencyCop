@@ -2,6 +2,9 @@ name: dotnet package
 
 on: [push]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
 
@@ -22,3 +25,21 @@ jobs:
         run: dotnet msbuild _Development/Solution.proj /t:_Build /p:Configuration=Release
       - name: Test
         run: dotnet msbuild _Development/Solution.proj /t:_Test /p:Configuration=Release
+      - name: Upload NuGet Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-package
+          path: Lindhart.DependencyCop.Package/bin/Release/*.nupkg
+          if-no-files-found: error
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: _Development/obj/TestResults/**/*.trx
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: _Development/obj/TestReport/
