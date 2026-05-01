@@ -9,23 +9,23 @@
 
   <PropertyGroup>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <MajorVersion>3</MajorVersion>
-    <MinorVersion>0</MinorVersion>
+    <MajorVersion>0</MajorVersion>
+    <MinorVersion>1</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
     <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).0</Version>
     <FileVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildNumber)</FileVersion>
     <Authors>Lars Iversen, Morten Hartlev Lindhart</Authors>
-    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) (c) Lars Iversen. All rights reserved.</Copyright>
+    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) (c) Morten Hartlev Lindhart. All rights reserved.</Copyright>
     <Description>Roslyn analyzers that enforce restrictions on dependencies between namespaces.</Description>
-    <PackageId>Liversen.DependencyCop</PackageId>
+    <PackageId>Lindhart.DependencyCop</PackageId>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>Liversen.DependencyCop;Roslyn;Analyzers;CodeAnalysis</PackageTags>
-    <PackageProjectUrl>https://github.com/larsiverpp/DependencyCop</PackageProjectUrl>
+    <PackageTags>Lindhart.DependencyCop;Roslyn;Analyzers;CodeAnalysis</PackageTags>
+    <PackageProjectUrl>https://github.com/ykoksen/DependencyCop</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)-beta.1</PackageVersion>
-    <RepositoryUrl>https://github.com/larsiverpp/DependencyCop.git </RepositoryUrl>
+    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)</PackageVersion>
+    <RepositoryUrl>https://github.com/ykoksen/DependencyCop.git </RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddAnalyzersToOutput</TargetsForTfmSpecificContentInPackage>
@@ -39,11 +39,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Liversen.DependencyCop.CodeFixes\Liversen.DependencyCop.CodeFixes.csproj" />
-    <ProjectReference Include="..\Liversen.DependencyCop\Liversen.DependencyCop.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="tools\*.ps1" CopyToOutputDirectory="PreserveNewest" Pack="true" PackagePath="" />
   </ItemGroup>
 
@@ -52,6 +47,8 @@
       <PackagePath></PackagePath>
       <Pack>true</Pack>
     </None>
+    <ProjectReference Include="..\Lindhart.DependencyCop.CodeFixes\Lindhart.DependencyCop.CodeFixes.csproj" />
+    <ProjectReference Include="..\Lindhart.DependencyCop\Lindhart.DependencyCop.csproj" />
     <None Update="Icon.png">
       <PackagePath></PackagePath>
       <Pack>true</Pack>
@@ -60,8 +57,8 @@
 
   <Target Name="_AddAnalyzersToOutput">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="$(OutputPath)\Liversen.DependencyCop.dll" PackagePath="analyzers/dotnet/cs" />
-      <TfmSpecificPackageFile Include="$(OutputPath)\Liversen.DependencyCop.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
+      <TfmSpecificPackageFile Include="$(OutputPath)\Lindhart.DependencyCop.dll" PackagePath="analyzers/dotnet/cs" />
+      <TfmSpecificPackageFile Include="$(OutputPath)\Lindhart.DependencyCop.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
     </ItemGroup>
   </Target>
 

@@ -3,6 +3,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Lindhart.DependencyCop</RootNamespace>
     <IsTestProject>true</IsTestProject>
+    <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="DescendantNamespaceAccess\TestData\Analyzer\*.cs" />
@@ -95,7 +96,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Liversen.DependencyCop.CodeFixes\Liversen.DependencyCop.CodeFixes.csproj" />
-    <ProjectReference Include="..\Liversen.DependencyCop\Liversen.DependencyCop.csproj" />
+    <ProjectReference Include="..\Lindhart.DependencyCop.CodeFixes\Lindhart.DependencyCop.CodeFixes.csproj" />
+    <ProjectReference Include="..\Lindhart.DependencyCop\Lindhart.DependencyCop.csproj" />
   </ItemGroup>
 </Project>

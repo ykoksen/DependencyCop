@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Liversen.DependencyCop\Liversen.DependencyCop.csproj" />
+    <ProjectReference Include="..\Lindhart.DependencyCop\Lindhart.DependencyCop.csproj" />
   </ItemGroup>
 
 </Project>
