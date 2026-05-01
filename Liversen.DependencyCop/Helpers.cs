@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Liversen.DependencyCop
+namespace Lindhart.DependencyCop
 {
     public static class Helpers
     {

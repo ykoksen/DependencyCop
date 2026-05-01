@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Liversen.DependencyCop.UsingNamespaceStatement
+namespace Lindhart.DependencyCop.UsingNamespaceStatement
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class Analyzer : DiagnosticAnalyzer
@@ -21,7 +21,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
             "DC.Readability",
             DiagnosticSeverity.Warning,
             true,
-            helpLinkUri: "https://github.com/larsiverpp/DependencyCop/blob/main/Liversen.DependencyCop/Documentation/DC1001.md");
+            helpLinkUri: "https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1001.md");
 
         static readonly DiagnosticDescriptor Descriptor2 = new DiagnosticDescriptor(
             "DC1004",
@@ -30,7 +30,7 @@ namespace Liversen.DependencyCop.UsingNamespaceStatement
             "DC.Readability",
             DiagnosticSeverity.Warning,
             true,
-            helpLinkUri: "https://github.com/larsiverpp/DependencyCop/blob/main/Liversen.DependencyCop/Documentation/DC1004.md",
+            helpLinkUri: "https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1004.md",
             customTags: WellKnownDiagnosticTags.CompilationEnd);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Descriptor, Descriptor2);

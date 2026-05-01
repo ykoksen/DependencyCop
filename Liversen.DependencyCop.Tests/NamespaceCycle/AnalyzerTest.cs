@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Xunit;
-using Verify = Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerVerifier<Liversen.DependencyCop.NamespaceCycle.Analyzer, Microsoft.CodeAnalysis.Testing.DefaultVerifier>;
+using Verify = Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerVerifier<Lindhart.DependencyCop.NamespaceCycle.Analyzer, Microsoft.CodeAnalysis.Testing.DefaultVerifier>;
 
-namespace Liversen.DependencyCop.NamespaceCycle
+namespace Lindhart.DependencyCop.NamespaceCycle
 {
     public class AnalyzerTest
     {

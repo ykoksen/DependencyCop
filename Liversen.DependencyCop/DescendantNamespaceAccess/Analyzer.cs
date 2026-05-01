@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Liversen.DependencyCop.DescendantNamespaceAccess
+namespace Lindhart.DependencyCop.DescendantNamespaceAccess
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class Analyzer : DiagnosticAnalyzer
@@ -16,7 +16,7 @@ namespace Liversen.DependencyCop.DescendantNamespaceAccess
             "DC.Design",
             DiagnosticSeverity.Warning,
             true,
-            helpLinkUri: "https://github.com/larsiverpp/DependencyCop/blob/main/Liversen.DependencyCop/Documentation/DC1002.md");
+            helpLinkUri: "https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1002.md");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Descriptor);
 

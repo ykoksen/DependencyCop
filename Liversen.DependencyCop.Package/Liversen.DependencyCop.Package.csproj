@@ -16,16 +16,16 @@
     <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).0</Version>
     <FileVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildNumber)</FileVersion>
     <Authors>Lars Iversen, Morten Hartlev Lindhart</Authors>
-    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) (c) Lars Iversen. All rights reserved.</Copyright>
+    <Copyright>Copyright $([System.DateTime]::UtcNow.ToString(yyyy)) (c) Morten Hartlev Lindhart. All rights reserved.</Copyright>
     <Description>Roslyn analyzers that enforce restrictions on dependencies between namespaces.</Description>
-    <PackageId>Liversen.DependencyCop</PackageId>
+    <PackageId>Lindhart.DependencyCop</PackageId>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>Liversen.DependencyCop;Roslyn;Analyzers;CodeAnalysis</PackageTags>
-    <PackageProjectUrl>https://github.com/larsiverpp/DependencyCop</PackageProjectUrl>
+    <PackageTags>Lindhart.DependencyCop;Roslyn;Analyzers;CodeAnalysis</PackageTags>
+    <PackageProjectUrl>https://github.com/ykoksen/DependencyCop</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)-beta.1</PackageVersion>
-    <RepositoryUrl>https://github.com/larsiverpp/DependencyCop.git </RepositoryUrl>
+    <RepositoryUrl>https://github.com/ykoksen/DependencyCop.git </RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddAnalyzersToOutput</TargetsForTfmSpecificContentInPackage>
@@ -60,8 +60,8 @@
 
   <Target Name="_AddAnalyzersToOutput">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="$(OutputPath)\Liversen.DependencyCop.dll" PackagePath="analyzers/dotnet/cs" />
-      <TfmSpecificPackageFile Include="$(OutputPath)\Liversen.DependencyCop.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
+      <TfmSpecificPackageFile Include="$(OutputPath)\Lindhart.DependencyCop.dll" PackagePath="analyzers/dotnet/cs" />
+      <TfmSpecificPackageFile Include="$(OutputPath)\Lindhart.DependencyCop.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
     </ItemGroup>
   </Target>
 

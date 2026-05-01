@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Editing;
 
-namespace Liversen.DependencyCop.UsingNamespaceStatement
+namespace Lindhart.DependencyCop.UsingNamespaceStatement
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(FixProvider))]
     [Shared]

@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Liversen.DependencyCop.NamespaceCycle
+namespace Lindhart.DependencyCop.NamespaceCycle
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class Analyzer : DiagnosticAnalyzer
@@ -18,7 +18,7 @@ namespace Liversen.DependencyCop.NamespaceCycle
             "DC.Design",
             DiagnosticSeverity.Warning,
             true,
-            helpLinkUri: "https://github.com/larsiverpp/DependencyCop/blob/main/Liversen.DependencyCop/Documentation/DC1003.md");
+            helpLinkUri: "https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1003.md");
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Descriptor);
 

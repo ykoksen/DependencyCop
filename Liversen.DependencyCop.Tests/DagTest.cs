@@ -2,7 +2,7 @@
 using Shouldly;
 using Xunit;
 
-namespace Liversen.DependencyCop
+namespace Lindhart.DependencyCop
 {
     public static class DagTest
     {

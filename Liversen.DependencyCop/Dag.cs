@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Liversen.DependencyCop
+namespace Lindhart.DependencyCop
 {
     /// <summary>
     /// Directed acyclic graph.

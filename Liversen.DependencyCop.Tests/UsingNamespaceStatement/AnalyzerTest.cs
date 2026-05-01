@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Testing;
 using Shouldly;
 using Xunit;
 
-namespace Liversen.DependencyCop.UsingNamespaceStatement
+namespace Lindhart.DependencyCop.UsingNamespaceStatement
 {
     public class AnalyzerTest
     {

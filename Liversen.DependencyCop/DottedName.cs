@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Liversen.DependencyCop
+namespace Lindhart.DependencyCop
 {
     public sealed class DottedName : Equatable<DottedName>
     {

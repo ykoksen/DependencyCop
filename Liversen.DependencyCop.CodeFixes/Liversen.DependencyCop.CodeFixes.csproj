@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Liversen.DependencyCop</RootNamespace>
+    <AssemblyName>Lindhart.DependencyCop.CodeFixes</AssemblyName>
+    <RootNamespace>Lindhart.DependencyCop</RootNamespace>
     <MajorVersion>3</MajorVersion>
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>

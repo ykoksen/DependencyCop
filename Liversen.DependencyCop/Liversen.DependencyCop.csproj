@@ -5,6 +5,8 @@
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <!-- Avoid ID conflicts with the package project. -->
     <PackageId>*$(MSBuildProjectFile)*</PackageId>
+    <AssemblyName>Lindhart.DependencyCop</AssemblyName>
+    <RootNamespace>Lindhart.DependencyCop</RootNamespace>
     <MajorVersion>3</MajorVersion>
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>
