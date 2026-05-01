@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="_Build;_Test">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <SolutionFile>$(MSBuildProjectDirectory)\..\Lindhart.DependencyCop.slnx</SolutionFile>
     <SolutionDir>$(MSBuildProjectDirectory)\..</SolutionDir>
   </PropertyGroup>
