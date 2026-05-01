@@ -18,4 +18,4 @@ This package contains a number of Roslyn analyzer rules using the .NET Compiler 
 
 ---
 
-📖 **For complete documentation, rationale, and examples**, see the [main repository README](https://github.com/ykoksen/DependencyCop#readme).
+📖 **For complete documentation, rationale, and details about the fork**, see the [main repository README](https://github.com/ykoksen/DependencyCop#readme).
