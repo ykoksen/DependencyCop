@@ -1,10 +1,12 @@
 # DependencyCop
 
 > **Note:** This is a fork of the [original DependencyCop analyzer](https://github.com/larsiverpp/DependencyCop) by Lars Iversen. The major enhancement in this fork is the addition of an **automatic code fixer for rule DC1001**, which can automatically refactor code to remove disallowed `using` statements and replace them with qualified type names.
+>
+> **Rule IDs remain unchanged** (DC1001, DC1002, DC1003, DC1004), ensuring full backward compatibility with existing `.editorconfig` files, ruleset configurations, and suppression attributes when migrating from `Liversen.DependencyCop`.
 
 This repository contains an implementation of a number of Roslyn analyzer rules using the .NET Compiler Platform. The rules enforce certain restrictions on dependencies between code in different namespaces.
 
-For an overview of the rules, see [README.md](./Liversen.DependencyCop.Package/README.md).
+For an overview of the rules, see [README.md](./Lindhart.DependencyCop.Package/README.md).
 
 ## What's New in This Fork
 

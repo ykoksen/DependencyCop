@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="_Build;_Test">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <SolutionFile>$(MSBuildProjectDirectory)\..\Liversen.DependencyCop.slnx</SolutionFile>
+    <TargetFramework>net10.0</TargetFramework>
+    <SolutionFile>$(MSBuildProjectDirectory)\..\Lindhart.DependencyCop.slnx</SolutionFile>
     <SolutionDir>$(MSBuildProjectDirectory)\..</SolutionDir>
   </PropertyGroup>
   <ItemGroup>

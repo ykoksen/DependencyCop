@@ -1,6 +1,8 @@
 # DependencyCop
 
 > **This package is a fork of the [original Liversen.DependencyCop](https://www.nuget.org/packages/Liversen.DependencyCop) by Lars Iversen, enhanced with automatic code fixing capabilities.**
+>
+> **Migrating from Liversen.DependencyCop?** All rule IDs remain unchanged (DC1001, DC1002, DC1003, DC1004), so your existing configurations will continue to work without modification.
 
 This package contains a number of Roslyn analyzer rules using the .NET Compiler Platform. The rules enforce certain restrictions on dependencies between code in different namespaces.
 
