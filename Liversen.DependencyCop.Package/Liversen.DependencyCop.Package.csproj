@@ -24,7 +24,7 @@
     <PackageTags>Liversen.DependencyCop;Roslyn;Analyzers;CodeAnalysis</PackageTags>
     <PackageProjectUrl>https://github.com/larsiverpp/DependencyCop</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)-beta.4.1</PackageVersion>
+    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)-beta.4</PackageVersion>
     <RepositoryUrl>https://github.com/larsiverpp/DependencyCop.git </RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
@@ -39,7 +39,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Liversen.DependencyCop.CodeFixes\Liversen.DependencyCop.CodeFixes.csproj" />
     <ProjectReference Include="..\Liversen.DependencyCop\Liversen.DependencyCop.csproj" />
   </ItemGroup>
 
@@ -61,7 +60,6 @@
   <Target Name="_AddAnalyzersToOutput">
     <ItemGroup>
       <TfmSpecificPackageFile Include="$(OutputPath)\Liversen.DependencyCop.dll" PackagePath="analyzers/dotnet/cs" />
-      <TfmSpecificPackageFile Include="$(OutputPath)\Liversen.DependencyCop.CodeFixes.dll" PackagePath="analyzers/dotnet/cs" />
     </ItemGroup>
   </Target>
 
