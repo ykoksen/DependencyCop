@@ -6,6 +6,8 @@
 
 This package contains a number of Roslyn analyzer rules using the .NET Compiler Platform. The rules enforce certain restrictions on dependencies between code in different namespaces.
 
+## Rules
+
 [Rule DC1001: Using namespace statements must not reference disallowed namespaces](https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1001.md)
 
 [Rule DC1002: Code must not refer code in descendant namespaces](https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1002.md)
@@ -14,7 +16,6 @@ This package contains a number of Roslyn analyzer rules using the .NET Compiler 
 
 [Rule DC1004: Rule DC1001 is not configured](https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1004.md)
 
-## Changelog
+---
 
-### 1.0 - 2.0
-- Refactored codebase. 
+📖 **For complete documentation, rationale, and details about the fork**, see the [main repository README](https://github.com/ykoksen/DependencyCop#readme).
