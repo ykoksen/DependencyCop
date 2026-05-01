@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Liversen.DependencyCop
+namespace Lindhart.DependencyCop
 {
     static class EmbeddedResourceHelpers
     {

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Editing;
 
-namespace Liversen.DependencyCop.UsingNamespaceStatement
+namespace Lindhart.DependencyCop.UsingNamespaceStatement
 {
     class SingleViolationFixer
     {

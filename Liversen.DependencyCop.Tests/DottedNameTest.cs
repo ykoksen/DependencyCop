@@ -4,7 +4,7 @@ using System.Linq;
 using Shouldly;
 using Xunit;
 
-namespace Liversen.DependencyCop
+namespace Lindhart.DependencyCop
 {
     public static class DottedNameTest
     {

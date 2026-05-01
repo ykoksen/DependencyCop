@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <RootNamespace>Liversen.DependencyCop</RootNamespace>
+    <RootNamespace>Lindhart.DependencyCop</RootNamespace>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <ItemGroup>

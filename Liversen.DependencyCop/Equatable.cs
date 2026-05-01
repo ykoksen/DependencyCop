@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Liversen.DependencyCop
+namespace Lindhart.DependencyCop
 {
     [SuppressMessage("", "S4035:Seal class 'Equatable' or implement IEqualityComparer<T>1 instead.", Justification = "False positive.")]
     public abstract class Equatable<TValue> : IEquatable<TValue>

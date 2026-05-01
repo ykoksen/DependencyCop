@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Liversen.DependencyCop.UsingNamespaceStatement
+namespace Lindhart.DependencyCop.UsingNamespaceStatement
 {
     sealed class Violation
     {

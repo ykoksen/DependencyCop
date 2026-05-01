@@ -1,8 +1,25 @@
 # DependencyCop
 
+> **Note:** This is a fork of the [original DependencyCop analyzer](https://github.com/larsiverpp/DependencyCop) by Lars Iversen. The major enhancement in this fork is the addition of an **automatic code fixer for rule DC1001**, which can automatically refactor code to remove disallowed `using` statements and replace them with qualified type names.
+
 This repository contains an implementation of a number of Roslyn analyzer rules using the .NET Compiler Platform. The rules enforce certain restrictions on dependencies between code in different namespaces.
 
-For an overview of the rules, see [README.md](./Liversen.DependencyCop/README.md).
+For an overview of the rules, see [README.md](./Liversen.DependencyCop.Package/README.md).
+
+## What's New in This Fork
+
+### Automatic Code Fix for DC1001 ✨
+
+The key difference from the original analyzer is the inclusion of a **CodeFixProvider** for rule DC1001. When the analyzer detects a violation (use of a disallowed namespace in a `using` statement), you can now:
+
+- **Apply automatic fixes** via IDE quick actions (Ctrl+. in Visual Studio)
+- **Fix all occurrences** in a document, project, or solution in one click
+- The fixer automatically:
+  - Removes the violating `using` statement
+  - Replaces all references with appropriately qualified type names (using only the necessary namespace parts relative to the current context)
+  - Handles complex scenarios including generics, arrays, async methods, extension methods, and more
+
+This makes it significantly easier to adopt and enforce the DC1001 coding style across large codebases.
 
 ## Rationale
 
@@ -16,7 +33,7 @@ The rules in this repository aim at helping getting those namespace structures r
 
 The severity of individual rules may be configured using [rule set files](https://docs.microsoft.com/en-us/visualstudio/code-quality/using-rule-sets-to-group-code-analysis-rules).
 
-Rule [DC1001](https://github.com/larsiverpp/DependencyCop/blob/main/Liversen.DependencyCop/Documentation/DC1001.md) requires additional configuration to be enabled, see the documentation for that rule for further info.
+Rule [DC1001](https://github.com/ykoksen/DependencyCop/blob/main/Documentation/DC1001.md) requires additional configuration to be enabled, see the documentation for that rule for further info.
 
 ## Installation
 
@@ -24,4 +41,5 @@ The analyzers can be installed using the NuGet command line or the NuGet Package
 
 Install using the command line:
 
-    Install-Package Liversen.DependencyCop
+    Install-Package Lindhart.DependencyCop
+
