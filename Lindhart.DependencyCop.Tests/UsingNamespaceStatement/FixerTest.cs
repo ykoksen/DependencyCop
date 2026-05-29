@@ -42,6 +42,7 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
         [InlineData("XmlDocQualifiedCref")]
         [InlineData("XmlDocCrefParameter")]
         [InlineData("OneUsingRemovedOneKept")]
+        [InlineData("NamespaceQualifiedAccess")]
         async Task GivenCodeUsingDisallowedNamespace_WhenCodeFix_ThenExpectedResult(string testName, string optionalExtraNamespace = null)
         {
             var code = EmbeddedResourceHelpers.GetFixProviderTestData(GetType(), $"{testName}Code");
