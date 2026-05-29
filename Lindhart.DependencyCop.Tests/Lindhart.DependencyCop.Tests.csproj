@@ -72,6 +72,10 @@
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TypeOfFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterFixedCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\AlreadyFullyQualifiedCode.cs" />
@@ -130,6 +134,10 @@
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TypeOfFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterFixedCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />

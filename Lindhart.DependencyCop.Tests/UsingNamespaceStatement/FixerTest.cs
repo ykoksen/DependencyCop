@@ -39,6 +39,8 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
         [InlineData("NullConditionalChained")]
         [InlineData("LambdaWithNestedType")]
         [InlineData("XmlDocCref")]
+        [InlineData("XmlDocQualifiedCref")]
+        [InlineData("XmlDocCrefParameter")]
         [InlineData("OneUsingRemovedOneKept")]
         async Task GivenCodeUsingDisallowedNamespace_WhenCodeFix_ThenExpectedResult(string testName, string optionalExtraNamespace = null)
         {

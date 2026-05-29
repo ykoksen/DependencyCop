@@ -91,6 +91,13 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                 return node;
             }
 
+            // When this identifier is the Container of a QualifiedCrefSyntax, the
+            // VisitQualifiedCref override owns the qualification decision.
+            if (node.Parent is QualifiedCrefSyntax)
+            {
+                return node;
+            }
+
             if (this.insideViolatingNamespace)
             {
                 return node;
@@ -143,6 +150,13 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
             // When this generic name is the Name of a NameMemberCrefSyntax, the parent
             // VisitNameMemberCref call owns the qualification decision.
             if (node.Parent is NameMemberCrefSyntax)
+            {
+                return visited;
+            }
+
+            // When this generic name is the Container of a QualifiedCrefSyntax, the
+            // VisitQualifiedCref override owns the qualification decision.
+            if (node.Parent is QualifiedCrefSyntax)
             {
                 return visited;
             }
@@ -229,13 +243,51 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                             simpleCrefName.WithoutTrivia())
                         .WithTriviaFrom(node.Name);
 
-                    // Return the updated cref node with the qualified name; do NOT call
-                    // base because we've already produced the final result for this node.
-                    return node.WithName(qualifiedName);
+                    // Visit parameters so types inside them are also rewritten.
+                    var visitedNode = (NameMemberCrefSyntax)base.VisitNameMemberCref(node);
+
+                    // Return the updated cref node with the qualified name; preserve
+                    // any rewritten parameters from base visit.
+                    return visitedNode.WithName(qualifiedName);
                 }
             }
 
             return base.VisitNameMemberCref(node);
+        }
+
+        // ── QualifiedCref (XML doc <see cref="Type.Member"/>) ─────────────────────
+        public override SyntaxNode VisitQualifiedCref(QualifiedCrefSyntax node)
+        {
+            if (this.insideViolatingNamespace)
+            {
+                return base.VisitQualifiedCref(node);
+            }
+
+            // The Container is a NameSyntax (the type before the dot, e.g., "SomeType" in "SomeType.Method")
+            if (node.Container is SimpleNameSyntax simpleContainer)
+            {
+                var symbol = this.semanticModel.GetSymbolInfo(node.Container).Symbol as ITypeSymbol;
+                if (symbol?.ContainingNamespace?.ToDisplayString() == this.violatingNs.Value)
+                {
+                    var typeNs = new DottedName(symbol.ContainingNamespace.ToDisplayString());
+                    var prefix = this.currentNamespace != null
+                        ? typeNs.SkipCommonPrefix(this.currentNamespace)
+                        : typeNs;
+
+                    if (prefix != null)
+                    {
+                        var qualifiedContainer = SyntaxFactory
+                            .QualifiedName(
+                                SyntaxFactory.ParseName(prefix.Value),
+                                simpleContainer.WithoutTrivia())
+                            .WithTriviaFrom(node.Container);
+
+                        return node.WithContainer(qualifiedContainer);
+                    }
+                }
+            }
+
+            return base.VisitQualifiedCref(node);
         }
 
         // ── Helpers ───────────────────────────────────────────────────────────────
