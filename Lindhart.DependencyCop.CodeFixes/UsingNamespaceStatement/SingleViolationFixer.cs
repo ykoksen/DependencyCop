@@ -70,24 +70,32 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
             return false;
         }
 
-        static NameSyntax FixByQualifyingUsageOfType(NameSyntax fullNameSpace, Violation violation)
+        static SyntaxNode FixByQualifyingUsageOfType(NameSyntax fullNameSpace, Violation violation)
         {
             var replacementName = new DottedName(fullNameSpace.ToString()).SkipCommonPrefix(violation.Namespace);
             if (replacementName != null)
             {
-                // If the original node was already qualified (e.g., Event.Nested), we need to prepend
-                // the namespace to the entire qualified name, not just wrap the rightmost part
-                if (violation.OriginalNode is QualifiedNameSyntax)
+                // In expression context (e.g. "Event.Foo.Method()") the C# parser represents
+                // dotted names as MemberAccessExpressionSyntax chains, not QualifiedNameSyntax.
+                // Inserting a QualifiedNameSyntax here produces an AST type mismatch with the
+                // expected fixed code, causing the iterative-fix comparison to fail.
+                if (violation.ViolatingNode.Parent is MemberAccessExpressionSyntax memberAccess
+                    && memberAccess.Expression == violation.ViolatingNode)
                 {
-                    // Parse the full qualified name to handle nested types correctly
-                    // E.g., "Event.Nested" becomes "Account.Event.Nested", not "Account.(Event.Nested)"
-                    var fullQualifiedName = $"{replacementName.Value}.{violation.OriginalNode}";
-                    return SyntaxFactory.ParseName(fullQualifiedName);
+                    return SyntaxFactory.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SyntaxFactory.ParseExpression(replacementName.Value),
+                        violation.ViolatingNode);
                 }
 
+                // In type-annotation context always qualify from the rightmost simple name
+                // (violation.ViolatingNode).  Using violation.OriginalNode when it is a
+                // QualifiedNameSyntax (e.g. "UsingNamespaceStatementAnalyzer.Account.Id")
+                // would prepend the replacement prefix to the *entire* qualified chain,
+                // producing double-qualification such as
+                // "Account.UsingNamespaceStatementAnalyzer.Account.Id".
                 var nameSyntax = SyntaxFactory.ParseName(replacementName.Value);
-                var qualifiedNameSyntax = SyntaxFactory.QualifiedName(nameSyntax, violation.ViolatingNode);
-                return qualifiedNameSyntax;
+                return SyntaxFactory.QualifiedName(nameSyntax, violation.ViolatingNode);
             }
 
             return null;
@@ -119,10 +127,39 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
             }
         }
 
+        /// <summary>
+        /// Returns true when <paramref name="node"/> is the <c>.Name</c> (right-hand side) of a
+        /// <see cref="MemberAccessExpressionSyntax"/> whose left-hand <c>.Expression</c> resolves
+        /// to a type that lives in the disallowed namespace.  In that situation the left-hand type
+        /// will be fully qualified by a separate <c>editor.ReplaceNode</c> call, which carries the
+        /// right-hand name along automatically.  Qualifying the right-hand name separately would
+        /// produce double-qualification such as
+        /// <c>Account.Event.Account.Event.ResponseAfterManuallyHandled</c>.
+        /// </summary>
+        bool IsRightSideOfMemberAccessWithDisallowedLeftSide(SyntaxNode node, CancellationToken token)
+        {
+            if (node.Parent is MemberAccessExpressionSyntax mae && node == mae.Name)
+            {
+                var leftSymbol = semanticModel.GetSymbolInfo(mae.Expression, token).Symbol;
+                if (leftSymbol is ITypeSymbol leftType &&
+                    leftType.ContainingNamespace?.ToDisplayString() == usingDirectiveName.Value)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         void GoThroughNormalNodes(SyntaxNode node, DottedName namespaceWhereTypeWasDeclared, CancellationToken token)
         {
             if (node is SimpleNameSyntax)
             {
+                if (IsRightSideOfMemberAccessWithDisallowedLeftSide(node, token))
+                {
+                    return;
+                }
+
                 var newNode = HandlePotentialNodeTree(node, namespaceWhereTypeWasDeclared, token);
                 if (newNode != node)
                 {
@@ -248,9 +285,13 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                 }
 
                 var fullNameSpace = symbol.ToDisplayString();
-                var lol = ((QualifiedNameSyntax)SyntaxFactory.ParseName(fullNameSpace)).Left;
+                var containingNamespaceSyntax = SyntaxFactory.ParseName(fullNameSpace) as QualifiedNameSyntax;
+                if (containingNamespaceSyntax == null)
+                {
+                    return violation.OriginalNode;
+                }
 
-                return FixByQualifyingUsageOfType(lol, violation);
+                return FixByQualifyingUsageOfType(containingNamespaceSyntax.Left, violation) ?? violation.OriginalNode;
             }
 
             return violation.OriginalNode;
