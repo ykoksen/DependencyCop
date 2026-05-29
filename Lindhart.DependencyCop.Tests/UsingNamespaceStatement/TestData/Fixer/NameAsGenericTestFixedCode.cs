@@ -1,5 +1,4 @@
-﻿
-namespace UsingNamespaceStatementAnalyzer.Account
+﻿namespace UsingNamespaceStatementAnalyzer.Account
 {
     class Item
     {

@@ -1,4 +1,3 @@
-
 namespace UsingNamespaceStatementAnalyzer.Transaction;
 
 class Current

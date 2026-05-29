@@ -8,8 +8,11 @@ namespace UsingNamespaceStatementAnalyzer.Account
 
 namespace UsingNamespaceStatementAnalyzer.Transaction
 {
-    record CustomerRecord
+    class MyClass
     {
+        /// <summary>
+        /// Returns a <see cref="Account.Response"/>.
+        /// </summary>
         public Account.Response GetResponse() => new Account.Response();
     }
 }

@@ -31,6 +31,7 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
             SemanticModel semanticModel,
             UsingDirectiveSyntax violatingUsing,
             HashSet<string> existingStaticUsings)
+            : base(visitIntoStructuredTrivia: true)
         {
             this.violatingNs = violatingNs;
             this.semanticModel = semanticModel;
@@ -79,6 +80,13 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
             // When this identifier is the right child of a QualifiedName the parent
             // VisitQualifiedName call owns the qualification decision.
             if (node.Parent is QualifiedNameSyntax)
+            {
+                return node;
+            }
+
+            // When this identifier is the Name of a NameMemberCrefSyntax, the parent
+            // VisitNameMemberCref call owns the qualification decision.
+            if (node.Parent is NameMemberCrefSyntax)
             {
                 return node;
             }
@@ -132,6 +140,13 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                 return visited;
             }
 
+            // When this generic name is the Name of a NameMemberCrefSyntax, the parent
+            // VisitNameMemberCref call owns the qualification decision.
+            if (node.Parent is NameMemberCrefSyntax)
+            {
+                return visited;
+            }
+
             if (this.insideViolatingNamespace)
             {
                 return visited;
@@ -179,6 +194,48 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
             }
 
             return base.VisitQualifiedName(node);
+        }
+
+        // ── NameMemberCref (XML doc <see cref="..."/>) ────────────────────────────
+        public override SyntaxNode VisitNameMemberCref(NameMemberCrefSyntax node)
+        {
+            if (this.insideViolatingNamespace)
+            {
+                return base.VisitNameMemberCref(node);
+            }
+
+            // Only handle simple names (IdentifierName or GenericName).
+            // A name that is already a QualifiedName is already qualified; fall through.
+            if (!(node.Name is SimpleNameSyntax simpleCrefName))
+            {
+                return base.VisitNameMemberCref(node);
+            }
+
+            // GetSymbolInfo works for NameSyntax nodes inside XML doc cref attributes.
+            var symbol = this.semanticModel.GetSymbolInfo(node.Name).Symbol as ITypeSymbol;
+            if (symbol?.ContainingNamespace?.ToDisplayString() == this.violatingNs.Value)
+            {
+                var typeNs = new DottedName(symbol.ContainingNamespace.ToDisplayString());
+                var prefix = this.currentNamespace != null
+                    ? typeNs.SkipCommonPrefix(this.currentNamespace)
+                    : typeNs;
+
+                // prefix == null means same namespace — no qualification needed.
+                if (prefix != null)
+                {
+                    var qualifiedName = SyntaxFactory
+                        .QualifiedName(
+                            SyntaxFactory.ParseName(prefix.Value),
+                            simpleCrefName.WithoutTrivia())
+                        .WithTriviaFrom(node.Name);
+
+                    // Return the updated cref node with the qualified name; do NOT call
+                    // base because we've already produced the final result for this node.
+                    return node.WithName(qualifiedName);
+                }
+            }
+
+            return base.VisitNameMemberCref(node);
         }
 
         // ── Helpers ───────────────────────────────────────────────────────────────
