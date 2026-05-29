@@ -33,6 +33,11 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
         [InlineData("StaticUsingAlreadyExists")]
         [InlineData("GenericViolationWithNormalViolationTest")]
         [InlineData("NameAsGenericTest")]
+        [InlineData("PropertyAccess")]
+        [InlineData("Inheritance")]
+        [InlineData("Record")]
+        [InlineData("NullConditionalChained")]
+        [InlineData("LambdaWithNestedType")]
         async Task GivenCodeUsingDisallowedNamespace_WhenCodeFix_ThenExpectedResult(string testName, string optionalExtraNamespace = null)
         {
             var code = EmbeddedResourceHelpers.GetFixProviderTestData(GetType(), $"{testName}Code");

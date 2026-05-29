@@ -1,12 +1,13 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Composition;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Editing;
 
 namespace Lindhart.DependencyCop.UsingNamespaceStatement
 {
@@ -42,7 +43,7 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                         CodeAction.Create(
                             title: $"Qualify usages and remove this line ('{usingDirective.ToString()}').",
                             createChangedDocument: c => Fix(document, usingDirective, c),
-                            equivalenceKey: "QualifyAndRemoveUsing"),
+                            equivalenceKey: $"QualifyAndRemoveUsing:{usingDirective.Name}"),
                         diagnostic);
                 }
             }
@@ -66,13 +67,41 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                 return document;
             }
 
-            var editor = await DocumentEditor.CreateAsync(document, cancellationToken);
-            var staticUsingDirecetive = await StaticUsingsSet.GetExisingStaticUsings(document, cancellationToken);
+            var root = await document.GetSyntaxRootAsync(cancellationToken);
+            if (root == null)
+            {
+                return document;
+            }
 
-            var fixer = new SingleViolationFixer(violatingUsingDirective, usingDirectiveName, semanticModel, editor, staticUsingDirecetive);
+            // Collect names of pre-existing "using static" directives so we don't add duplicates.
+            var existingStaticUsings = new HashSet<string>(
+                root.DescendantNodes()
+                    .OfType<UsingDirectiveSyntax>()
+                    .Where(u => !string.IsNullOrEmpty(u.StaticKeyword.Text))
+                    .Select(u => u.Name?.ToString() ?? string.Empty));
 
-            var rootNode = await document.GetSyntaxRootAsync(cancellationToken);
-            return fixer.FixViolation(rootNode, cancellationToken);
+            var rewriter = new TypeQualifyingRewriter(
+                usingDirectiveName, semanticModel, violatingUsingDirective, existingStaticUsings);
+
+            var newRoot = rewriter.Visit(root);
+
+            // Insert any "using static" directives needed for extension-method calls.
+            if (rewriter.StaticUsingsToAdd.Count > 0 && newRoot is CompilationUnitSyntax compUnit)
+            {
+                // Reuse the violating using's trailing trivia (typically a newline) so the
+                // inserted directive ends with a proper line break before the next node.
+                var trailingTrivia = violatingUsingDirective.GetTrailingTrivia();
+
+                var newUsings = compUnit.Usings;
+                foreach (var su in rewriter.StaticUsingsToAdd)
+                {
+                    newUsings = newUsings.Insert(0, su.WithTrailingTrivia(trailingTrivia));
+                }
+
+                newRoot = compUnit.WithUsings(newUsings);
+            }
+
+            return document.WithSyntaxRoot(newRoot);
         }
     }
 }
