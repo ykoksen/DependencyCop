@@ -62,12 +62,20 @@
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\SubSpaceTestFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsFixedCode.cs" />
-        <Compile Remove="UsingNamespaceStatement\TestData\Fixer\FileScopedNamespaceCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\OneUsingRemovedOneKeptCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\OneUsingRemovedOneKeptFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\FileScopedNamespaceCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\FileScopedNamespaceFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\PatternMatchingCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\PatternMatchingFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TypeOfCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TypeOfFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessFixedCode.cs" />
   </ItemGroup>
@@ -118,12 +126,20 @@
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\SubSpaceTestFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TwoUsingStatementsFixedCode.cs" />
-        <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\FileScopedNamespaceCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\OneUsingRemovedOneKeptCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\OneUsingRemovedOneKeptFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\FileScopedNamespaceCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\FileScopedNamespaceFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\PatternMatchingCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\PatternMatchingFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TypeOfCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TypeOfFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocQualifiedCrefFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\XmlDocCrefParameterFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessFixedCode.cs" />
   </ItemGroup>

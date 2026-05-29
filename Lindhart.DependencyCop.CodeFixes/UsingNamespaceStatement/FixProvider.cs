@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Lindhart.DependencyCop.UsingNamespaceStatement
@@ -99,6 +100,62 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                 }
 
                 newRoot = compUnit.WithUsings(newUsings);
+            }
+
+            // When the violating using was the only one in the file AND no replacement
+            // using directives (e.g. "using static") were added, Roslyn's rewriter
+            // transfers the removed using's leading trivia (UTF-8 BOM, if present) plus
+            // the blank-line separator that preceded the first declaration onto that
+            // declaration's first token.  This leaves a spurious blank line at the very
+            // top of the fixed file.  Strip it now — but only after the using-static
+            // insertion above, so we don't accidentally remove the blank line that acts
+            // as a separator between a newly-inserted "using static" and the namespace
+            // declaration below it.
+            //
+            // Safety rules:
+            //   • Only strip when the file ends up with zero using directives (if any
+            //     usings remain there is still a natural separator, or the BOM is already
+            //     sitting on a using token, not on the namespace keyword).
+            //   • Preserve any leading WhitespaceTrivia (the UTF-8 BOM character).
+            //   • Never strip SingleLineComment / MultiLineComment / XmlDocComment
+            //     trivia — those are file-level copyright headers that must be kept.
+            if (!root.DescendantNodes().OfType<UsingDirectiveSyntax>()
+                    .Any(u => u != violatingUsingDirective)
+                && newRoot is CompilationUnitSyntax finalUnit
+                && finalUnit.Usings.Count == 0)
+            {
+                var firstToken = newRoot.GetFirstToken();
+                if (firstToken != default)
+                {
+                    var leadingTrivia = firstToken.LeadingTrivia;
+
+                    // Skip over any leading WhitespaceTrivia (e.g. the UTF-8 BOM) and
+                    // then strip the immediately-following EndOfLineTrivia (blank lines).
+                    // Stop at the first piece of trivia that is neither whitespace nor
+                    // end-of-line so that comments are never removed.
+                    int eolStart = 0;
+                    while (eolStart < leadingTrivia.Count
+                           && leadingTrivia[eolStart].IsKind(SyntaxKind.WhitespaceTrivia))
+                    {
+                        eolStart++;
+                    }
+
+                    int eolEnd = eolStart;
+                    while (eolEnd < leadingTrivia.Count
+                           && leadingTrivia[eolEnd].IsKind(SyntaxKind.EndOfLineTrivia))
+                    {
+                        eolEnd++;
+                    }
+
+                    if (eolEnd > eolStart)
+                    {
+                        var newLeadingTrivia = SyntaxFactory.TriviaList(
+                            leadingTrivia.Take(eolStart).Concat(leadingTrivia.Skip(eolEnd)));
+                        newRoot = newRoot.ReplaceToken(
+                            firstToken,
+                            firstToken.WithLeadingTrivia(newLeadingTrivia));
+                    }
+                }
             }
 
             return document.WithSyntaxRoot(newRoot);

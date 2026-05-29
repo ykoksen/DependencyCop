@@ -1,4 +1,3 @@
-
 namespace UsingNamespaceStatementAnalyzer.Account
 {
     class Response
