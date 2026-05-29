@@ -28,6 +28,10 @@
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodUsedTwiceCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\ExtensionMethodUsedTwiceFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\InheritanceCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\InheritanceFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\LambdaWithNestedTypeCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\LambdaWithNestedTypeFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\GenericTestCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\GenericTestFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\GenericViolationWithNormalViolationTestCode.cs" />
@@ -44,6 +48,12 @@
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\MethodReturnFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NullConditionalChainedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NullConditionalChainedFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\PropertyAccessCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\PropertyAccessFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\RecordCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\RecordFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\SimpleTestCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\SimpleTestFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\StaticUsingAlreadyExistsCode.cs" />
@@ -70,6 +80,10 @@
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\GenericTestFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\GenericViolationWithNormalViolationTestCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\GenericViolationWithNormalViolationTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\InheritanceCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\InheritanceFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\LambdaWithNestedTypeCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\LambdaWithNestedTypeFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ListTestCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\ListTestFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MemberMethodCallCode.cs" />
@@ -82,6 +96,12 @@
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\MethodReturnFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NameAsGenericTestFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NullConditionalChainedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NullConditionalChainedFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\PropertyAccessCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\PropertyAccessFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\RecordCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\RecordFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\SimpleTestCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\SimpleTestFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\StaticUsingAlreadyExistsCode.cs" />
