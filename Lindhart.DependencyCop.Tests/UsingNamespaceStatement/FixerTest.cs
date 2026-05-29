@@ -38,6 +38,7 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
         [InlineData("Record")]
         [InlineData("NullConditionalChained")]
         [InlineData("LambdaWithNestedType")]
+        [InlineData("NamespaceQualifiedAccess")]
         async Task GivenCodeUsingDisallowedNamespace_WhenCodeFix_ThenExpectedResult(string testName, string optionalExtraNamespace = null)
         {
             var code = EmbeddedResourceHelpers.GetFixProviderTestData(GetType(), $"{testName}Code");

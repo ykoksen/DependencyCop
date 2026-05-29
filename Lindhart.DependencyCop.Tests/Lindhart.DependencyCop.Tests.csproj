@@ -68,6 +68,8 @@
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\PatternMatchingFixedCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TypeOfCode.cs" />
     <Compile Remove="UsingNamespaceStatement\TestData\Fixer\TypeOfFixedCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessCode.cs" />
+    <Compile Remove="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessFixedCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\AlreadyFullyQualifiedCode.cs" />
@@ -122,6 +124,8 @@
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\PatternMatchingFixedCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TypeOfCode.cs" />
     <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\TypeOfFixedCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessCode.cs" />
+    <EmbeddedResource Include="UsingNamespaceStatement\TestData\Fixer\NamespaceQualifiedAccessFixedCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />

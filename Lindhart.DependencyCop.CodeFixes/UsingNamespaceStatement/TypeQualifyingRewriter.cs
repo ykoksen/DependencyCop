@@ -239,6 +239,15 @@ namespace Lindhart.DependencyCop.UsingNamespaceStatement
                 {
                     return true;
                 }
+
+                // If the left side is a namespace, the right side is already
+                // namespace-qualified and does not need additional qualification.
+                // Namespace resolution is independent of using directives, so the
+                // access will remain valid after removing the violating using.
+                if (leftSym is INamespaceSymbol)
+                {
+                    return true;
+                }
             }
 
             return false;
